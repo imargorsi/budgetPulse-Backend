@@ -4,10 +4,9 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 
-// Routes: add a file under routes/, require it here, then app.use("/", thatRouter).
-// See readme.md — "Add a new route".
-var indexRouter = require("./routes/index");
-var demoRouter = require("./routes/demo");
+ 
+  
+var investmentsRouter = require("./routes/investments");
 
 var app = express();
 
@@ -17,9 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
-app.use("/", indexRouter); // more routers: app.use("/", otherRouter);
-app.use("/", demoRouter);
-
+ 
+app.use("/", investmentsRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
