@@ -17,11 +17,7 @@ router.get("/api/investments", async function(req, res, next) {
 // POST /api/investments
 router.post("/api/investments", async function(req, res, next) {
     try {
-
- 
         const body = req.body;
-
-        console.log(body, "2body")
 
         if (!body || !body.name || !body.amount || !body.date) {
             return res.status(400).json({
