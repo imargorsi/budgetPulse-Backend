@@ -10,9 +10,9 @@ var router = express.Router();
 router.post("/api/current-value", async function(req, res, next) {
     try {
         const body = req.body;
-        const normalizedCurrentValue = Number(body && body.current_value);
+        const current_value = Number(body && body.current_value);
 
-        if (!body || body.current_value == null || !body.date || Number.isNaN(normalizedCurrentValue)) {
+        if (!body || body.current_value == null || !body.date || Number.isNaN(current_value)) {
             return res.status(400).json({
                 isSuccess: false,
                 message: "All Fields are required"
@@ -20,11 +20,11 @@ router.post("/api/current-value", async function(req, res, next) {
         }
 
         const currentValue = await currentValueService.createCurrentValue({
-            current_value: normalizedCurrentValue,
+            current_value,
             date: body.date 
         });
 
-        const summary = await currentValueService.getPortfolioSummary(normalizedCurrentValue);
+        const summary = await currentValueService.getPortfolioSummary(current_value);
 
         res.status(201).json({ isSuccess: true, currentValue, summary });
 
