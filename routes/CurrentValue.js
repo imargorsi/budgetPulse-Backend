@@ -15,7 +15,7 @@ router.post("/api/current-value", async function(req, res, next) {
         if (!body || body.current_value == null || !body.date || Number.isNaN(current_value)) {
             return res.status(400).json({
                 isSuccess: false,
-                message: "All Fields are required"
+                message: "All Fields are required and current_value must be a valid number"
             })  
         }
 
