@@ -18,8 +18,9 @@ router.get("/api/investments", async function(req, res, next) {
 router.post("/api/investments", async function(req, res, next) {
     try {
         const body = req.body;
+        const normalizedAmount = Number(body && body.amount);
 
-        if (!body || !body.name || !body.amount || !body.date) {
+        if (!body || body.amount == null || !body.date || Number.isNaN(normalizedAmount)) {
             return res.status(400).json({
                 isSuccess: false,
                 message: "All Fields are required"
@@ -27,8 +28,7 @@ router.post("/api/investments", async function(req, res, next) {
         }
 
         const investment = await investmentService.createInvestment({
-            name: body.name,
-            amount: body.amount,
+            amount: normalizedAmount,
             date: body.date 
         });
 
