@@ -25,8 +25,30 @@ const createInvestment = async (payload, userId) => {
     return db.Investments.create(payload);
 }
 
+const deleteInvestment = async (investmentId, userId) => {
+    const investment = await db.Investments.findOne({
+        where: { id: investmentId },
+        include: [
+            {
+                model: db.Funds,
+                as: "fund",
+                where: { userId },
+            },
+        ],
+    });
+
+    if (!investment) {
+        throw new AppError("Investment not found for this user", 403);
+    }
+
+    await investment.destroy();
+
+    return investment;
+}
+
 
 module.exports = {
     getAllInvestments,
-    createInvestment
+    createInvestment,
+    deleteInvestment,
 }

@@ -52,5 +52,26 @@ router.get("/api/investments",  authMiddleware, investmentController.getAllInves
  */
 router.post("/api/investments", authMiddleware, investmentController.createInvestment);
 
+/**
+ * @swagger
+ * /api/investments/{investmentId}:
+ *   delete:
+ *     summary: Delete an investment
+ *     tags: [Investments]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: investmentId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Investment ID to delete
+ *     responses:
+ *       200:
+ *         description: Investment deleted successfully
+ */
+router.delete("/api/investments/:investmentId", authMiddleware, investmentController.deleteInvestment);
+
 
 module.exports = router;

@@ -11,6 +11,10 @@ const getInvestmentsSchema = joi.object({
     fundId: joi.number().required(),
 });
 
+const deleteSchema = joi.object({
+    investmentId: joi.number().required(),
+});
+
 
 module.exports = {
     getAllInvestments: async (req, res, next) => {
@@ -43,6 +47,18 @@ module.exports = {
             } catch (error) {
                 next(error);
             }
+
+},
+
+    deleteInvestment: async (req, res, next) => {
+        try {
+            const { investmentId } = await deleteSchema.validateAsync(req.params);
+            const investment = await investmentService.deleteInvestment(investmentId, req.user.id);
+
+            res.apiSuccess({ investment });
+        } catch (error) {
+            next(error);
+        }
 
 }
 }

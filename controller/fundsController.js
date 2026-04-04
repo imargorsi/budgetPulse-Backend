@@ -7,6 +7,10 @@ const schema = joi.object({
     description: joi.string().optional()
 })
 
+const deleteSchema = joi.object({
+    fundId: joi.number().required(),
+})
+
 
 
 module.exports = {
@@ -30,5 +34,15 @@ module.exports = {
           } catch (error) {
               next(error);
           }
+        },
+    deleteFund: async (req, res, next) => {
+        try {
+            const { fundId } = await deleteSchema.validateAsync(req.params);
+            const fund = await fundsService.deleteFund(fundId, req.user.id);
+
+            res.apiSuccess({ fund });
+        } catch (error) {
+            next(error);
+        }
         }
 }

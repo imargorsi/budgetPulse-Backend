@@ -40,6 +40,29 @@ router.get("/api/funds", authMiddleware, fundsController.getAllFunds);
  */
 router.post("/api/funds", authMiddleware, fundsController.createFund);
 
+/**
+ * @swagger
+ * /api/funds/{fundId}:
+ *   delete:
+ *     summary: Delete a fund
+ *     tags: [Funds]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: fundId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Fund ID to delete
+ *     responses:
+ *       200:
+ *         description: Fund deleted successfully
+ *       409:
+ *         description: Fund has linked investments and cannot be deleted
+ */
+router.delete("/api/funds/:fundId", authMiddleware, fundsController.deleteFund);
+
 
 
 module.exports = router;
