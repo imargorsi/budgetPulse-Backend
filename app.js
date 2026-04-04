@@ -9,7 +9,7 @@ const swaggerSpec = require('./swagger');
  
   
 var investmentsRouter = require("./routes/investments");
-var currentValueRouter = require("./routes/CurrentValue");
+const currentValueRouter = require("./routes/currentValue");
 var fundsRouter = require("./routes/funds");
 
 

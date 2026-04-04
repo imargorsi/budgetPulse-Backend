@@ -1,8 +1,7 @@
-var express  = require("express");
+var express = require("express");
 var router = express.Router();
-const fundsService = require("../service/fundsService");
+const fundsController = require("../controller/fundsController");
 
-    
 
 
 /**
@@ -15,23 +14,14 @@ const fundsService = require("../service/fundsService");
  *       200:
  *         description: List of funds
  */
-
-router.get("/api/funds", async function(req, res, next) {
-    try {
-        const funds = await fundsService.getAllFunds();
-        res.json({ ok: true, funds });
-    }catch (error) {
-        next(error);
-    }
-})
-
+router.get("/api/funds", fundsController.getAllFunds);
 
 
 /**
  * @swagger
  * /api/funds:
  *   post:
- *     summary: Create a new fund
+ *     summary: Create a new und
  *     tags: [Funds]
  *     requestBody:
  *       required: true
@@ -43,23 +33,8 @@ router.get("/api/funds", async function(req, res, next) {
  *       201:
  *         description: Fund created successfully
  */
-router.post("/api/funds", async function(req, res, next) {
-    try {
-        const body = req.body;
+router.post("/api/funds", fundsController.createFund);
 
-            if (!body || !body.name) {  
-            return res.status(400).json({
-                isSuccess: false,
-                message: "Name field is required"
-            });
-        }
-
-        const fund = await fundsService.createFund(body);
-        res.json({ ok: true, fund });
-    } catch (error) {
-        next(error);
-    }
-});
 
 
 module.exports = router;
