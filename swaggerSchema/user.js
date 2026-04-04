@@ -1,0 +1,22 @@
+module.exports = {
+  type: 'object',
+  required: ['name', 'email', 'password'],
+  properties: {
+    name: {
+      type: 'string',
+      example: 'John Doe',
+    },
+    email: {
+      type: 'string',
+      example: 'john.doe@example.com',
+    },
+    password: {
+      type: 'string',
+      example: 'password123',
+    },
+    confirmPassword: {
+      type: 'string',
+      example: 'password123',
+    },
+  },
+};

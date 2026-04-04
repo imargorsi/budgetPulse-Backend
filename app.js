@@ -10,8 +10,9 @@ const { attachResponseHelpers } = require("./helper/responseHandler");
  
   
 var investmentsRouter = require("./routes/investments");
-const currentValueRouter = require("./routes/currentValue");
+var currentValueRouter = require("./routes/CurrentValue");
 var fundsRouter = require("./routes/funds");
+var userRouter = require("./routes/user");
 
 
 var app = express();
@@ -27,6 +28,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/", investmentsRouter);
 app.use("/", currentValueRouter);
 app.use("/", fundsRouter);
+app.use("/", userRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

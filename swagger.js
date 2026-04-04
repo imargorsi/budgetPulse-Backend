@@ -3,6 +3,8 @@ const fundsSchema = require('./swaggerSchema/funds');
 const investmentsSchema = require('./swaggerSchema/investments');
 const currentValueSchema = require('./swaggerSchema/currentValue');
 
+const userSchema = require('./swaggerSchema/user');
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -21,6 +23,7 @@ const options = {
         Fund: fundsSchema,
         Investment: investmentsSchema,
         CurrentValue: currentValueSchema,
+        User: userSchema,
         },
     },
     tags: [
@@ -35,6 +38,10 @@ const options = {
       {
         name: 'CurrentValues',
         description: 'Current value management APIs',
+      },
+      {
+        name: 'Auth',
+        description: 'Authentication APIs',
       },
     ],
   },
