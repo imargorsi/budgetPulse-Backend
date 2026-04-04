@@ -3,7 +3,16 @@ var router = express.Router();
 const investmentService = require("../service/investmentService");
 
 
-// Get /api/investments
+/**
+ * @swagger
+ * /api/investments:
+ *   get:
+ *     summary: Get all investments
+ *     tags: [Investments]
+ *     responses:
+ *       200:
+ *         description: List of investments
+ */
 router.get("/api/investments", async function(req, res, next) {
     try {
         const investments = await investmentService.getAllInvestments();
@@ -14,7 +23,23 @@ router.get("/api/investments", async function(req, res, next) {
 })
 
 
-// POST /api/investments
+
+/**
+ * @swagger
+ * /api/investments:
+ *   post:
+ *     summary: Post a new investment
+ *     tags: [Investments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Investment'
+ *     responses:
+ *       201:
+ *         description: Investment Posted successfully
+ */
 router.post("/api/investments", async function(req, res, next) {
     try {
         const body = req.body;

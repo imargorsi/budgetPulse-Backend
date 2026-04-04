@@ -6,7 +6,23 @@ var router = express.Router();
 
 
 
-// POST /api/current-value
+ /**
+ * @swagger
+ * /api/current-value:
+ *   post:
+ *     summary: Post Current Value to compute portfolio summary
+ *     tags: [CurrentValues]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CurrentValue'
+ *     responses:
+ *       201:
+ *         description: Current value Posted successfully and portfolio summary computed successfully
+ */
+
 router.post("/api/current-value", async function(req, res, next) {
     try {
         const body = req.body;

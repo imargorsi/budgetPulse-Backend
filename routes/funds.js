@@ -1,9 +1,21 @@
-var exporess = require("express");
-var router = exporess.Router();
+var express  = require("express");
+var router = express.Router();
 const fundsService = require("../service/fundsService");
 
+    
 
-// Get /api/funds
+
+/**
+ * @swagger
+ * /api/funds:
+ *   get:
+ *     summary: Get all funds
+ *     tags: [Funds]
+ *     responses:
+ *       200:
+ *         description: List of funds
+ */
+
 router.get("/api/funds", async function(req, res, next) {
     try {
         const funds = await fundsService.getAllFunds();
@@ -14,7 +26,23 @@ router.get("/api/funds", async function(req, res, next) {
 })
 
 
-// POST /api/funds
+
+/**
+ * @swagger
+ * /api/funds:
+ *   post:
+ *     summary: Create a new fund
+ *     tags: [Funds]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Fund'
+ *     responses:
+ *       201:
+ *         description: Fund created successfully
+ */
 router.post("/api/funds", async function(req, res, next) {
     try {
         const body = req.body;
