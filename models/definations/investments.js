@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      fundId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       amount: {
         type: DataTypes.FLOAT,
         allowNull: false,
