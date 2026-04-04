@@ -1,49 +1,43 @@
 const investmentService = require("../service/investmentService");
+const joi = require("joi");
+
+const schema = joi.object({
+    amount: joi.number().required(),
+    date: joi.date().required(),
+    fundId: joi.number().required(),
+});
+
+const getInvestmentsSchema = joi.object({
+    fundId: joi.number().required(),
+});
 
 
 module.exports = {
     getAllInvestments: async (req, res, next) => {
-
           try {
-                const investments = await investmentService.getAllInvestments();
-                res.json({ ok: true, investments });
+                const { fundId } = await getInvestmentsSchema.validateAsync(req.query);
+                const investments = await investmentService.getAllInvestments(fundId);
+                res.apiSuccess({ investments });
             } catch (error) {
                 next(error);
             }
-
 },
 
 
     createInvestment: async (req, res, next) => {
 
          try {
-                const body = req.body;
-                const normalizedAmount = Number(body && body.amount);
-                const fundId = Number(body && body.fundId);
-        
-                if (
-                    !body ||
-                    body.amount == null ||
-                    !body.date ||
-                    body.fundId == null ||
-                    Number.isNaN(normalizedAmount) ||
-                    Number.isNaN(fundId)
-                ) {
-                    return res.status(400).json({
-                        isSuccess: false,
-                        message: "All Fields are required and fundId must be a valid number"
-                    })
-                }
+                const { amount, date, fundId } = await schema.validateAsync(req.body);
         
                 const investment = await investmentService.createInvestment({
-                    amount: normalizedAmount,
-                    date: body.date,
+                    amount,
+                    date,
                     fundId
                 });
         
         
         
-                res.status(201).json({ isSuccess: true, investment });
+                res.apiSuccess({ investment }, 201);
         
         
             } catch (error) {

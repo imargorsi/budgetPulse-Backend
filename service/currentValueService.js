@@ -1,9 +1,10 @@
 const { db } = require("../models");
+const AppError = require("../helper/AppError");
 
 const createCurrentValue = async (payload) => {
     const fund = await db.Funds.findByPk(payload.fundId);
     if (!fund) {
-        throw new Error("Invalid fundId: Fund does not exist");
+        throw new AppError("Invalid fundId: Fund does not exist", 400);
     }
 
     return db.CurrentValue.create(payload);
@@ -11,11 +12,11 @@ const createCurrentValue = async (payload) => {
 
 const getPortfolioSummary = async (fundId, current_value) => {
     if (fundId == null) {
-        throw new Error("fundId is required to compute portfolio summary");
+        throw new AppError("fundId is required to compute portfolio summary", 400);
     }
 
     if (current_value == null) {
-        throw new Error("current value is required to compute portfolio summary");
+        throw new AppError("current value is required to compute portfolio summary", 400);
     }
 
     const totalInvestedRaw = await db.Investments.sum("amount", {

@@ -5,6 +5,7 @@ var logger = require("morgan");
 var cors = require("cors");
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
+const { attachResponseHelpers } = require("./helper/responseHandler");
 
  
   
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.use(attachResponseHelpers);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  
 app.use("/", investmentsRouter);
@@ -32,15 +34,18 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  const status = err.isJoi ? 400 : err.status || 500;
 
-  // send JSON error response
-  res.status(err.status || 500).json({
+  res.status(status).json({
+    isSuccess: false,
+    isError: true,
+    response: null,
     error: {
       message: err.message,
-      status: err.status || 500,
+      status,
+      details: err.isJoi
+        ? err.details.map((detail) => detail.message)
+        : undefined,
     },
   });
 });

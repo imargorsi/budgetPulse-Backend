@@ -9,8 +9,15 @@ const investmentController = require("../controller/investmentsController");
  * @swagger
  * /api/investments:
  *   get:
- *     summary: Get all Investments
+ *     summary: Get Investments by Fund
  *     tags: [Investments]
+ *     parameters:
+ *       - in: query
+ *         name: fundId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Fund ID to filter investments
  *     responses:
  *       200:
  *         description: List of investments
