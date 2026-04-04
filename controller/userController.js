@@ -11,6 +11,11 @@ const schema = joi.object({
     })
 })
 
+const loginSchema = joi.object({
+    email: joi.string().email().required(),
+    password: joi.string().min(6).required(),
+})
+
 module.exports = {
     createUser: async (req, res, next) => {
 
@@ -22,6 +27,17 @@ module.exports = {
 
             res.apiSuccess({ user }, 201);
 
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    loginUser: async (req, res, next) => {
+        try {
+            const { email, password } = await loginSchema.validateAsync(req.body);
+            const user = await userService.loginUser(email, password);
+
+            res.apiSuccess({ user }, 200);
         } catch (error) {
             next(error);
         }

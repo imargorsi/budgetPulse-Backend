@@ -21,6 +21,24 @@ const userController = require("../controller/userController");
  */
 router.post("/api/auth/register", userController.createUser);
 
+/**
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: Login user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Login'
+ *     responses:
+ *       200:
+ *         description: User logged in successfully
+ */
+router.post("/api/auth/login", userController.loginUser);
+
 
 
 module.exports = router;

@@ -4,6 +4,7 @@ const investmentsSchema = require('./swaggerSchema/investments');
 const currentValueSchema = require('./swaggerSchema/currentValue');
 
 const userSchema = require('./swaggerSchema/user');
+const loginSchema = require('./swaggerSchema/login');
 
 const options = {
   definition: {
@@ -24,6 +25,7 @@ const options = {
         Investment: investmentsSchema,
         CurrentValue: currentValueSchema,
         User: userSchema,
+        Login: loginSchema,
         },
     },
     tags: [

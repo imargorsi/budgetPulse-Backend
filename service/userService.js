@@ -2,7 +2,12 @@ const {db} = require("../models");
 
 const bycrypt = require("bcrypt");
 const AppError = require("../helper/AppError");
-const e = require("express");
+
+const toSafeUser = (user) => ({
+    id: user.id,
+    name: user.name,
+    email: user.email,
+});
 
 const registerUser = async (body) => {
     try {
@@ -22,7 +27,7 @@ const registerUser = async (body) => {
             password: passwordHash
         })
 
-        return newUser;
+        return toSafeUser(newUser);
 
     } catch (error) {
         console.error("Error in user registration:", error);
@@ -30,6 +35,30 @@ const registerUser = async (body) => {
     }
 }
 
+
+const loginUser = async (email, password) => {
+    try {
+        const user = await db.User.findOne({ where: { email } });
+
+        if (!user) {
+            throw new AppError("Invalid email or password", 401);
+        }
+
+        const isMatch = await bycrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            throw new AppError("Invalid email or password", 401);
+        }
+
+        return toSafeUser(user);
+
+    } catch (error) {
+        console.error("Error in user login:", error);
+        throw error; 
+    }
+}
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }
