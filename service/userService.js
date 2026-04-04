@@ -3,6 +3,9 @@ const {db} = require("../models");
 const bycrypt = require("bcrypt");
 const AppError = require("../helper/AppError");
 
+const jwt = require('jsonwebtoken');
+
+
 const toSafeUser = (user) => ({
     id: user.id,
     name: user.name,
@@ -38,6 +41,10 @@ const registerUser = async (body) => {
 
 const loginUser = async (email, password) => {
     try {
+        if (!process.env.JWT_SECRET) {
+            throw new AppError("JWT configuration is missing", 500);
+        }
+
         const user = await db.User.findOne({ where: { email } });
 
         if (!user) {
@@ -50,7 +57,9 @@ const loginUser = async (email, password) => {
             throw new AppError("Invalid email or password", 401);
         }
 
-        return toSafeUser(user);
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+
+        return { user: toSafeUser(user), token };
 
     } catch (error) {
         console.error("Error in user login:", error);

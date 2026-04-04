@@ -3,6 +3,9 @@ var router = express.Router();
 
 const investmentController = require("../controller/investmentsController");
 
+const authMiddleware = require('../middleware/auth');
+
+
 
 
 /**
@@ -11,6 +14,8 @@ const investmentController = require("../controller/investmentsController");
  *   get:
  *     summary: Get Investments by Fund
  *     tags: [Investments]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: fundId
@@ -23,7 +28,7 @@ const investmentController = require("../controller/investmentsController");
  *         description: List of investments
  */
 
-router.get("/api/investments", investmentController.getAllInvestments);
+router.get("/api/investments",  authMiddleware, investmentController.getAllInvestments);
 
 
 
@@ -33,6 +38,8 @@ router.get("/api/investments", investmentController.getAllInvestments);
  *   post:
  *     summary: Post a new investment
  *     tags: [Investments]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -43,7 +50,7 @@ router.get("/api/investments", investmentController.getAllInvestments);
  *       201:
  *         description: Investment Posted successfully
  */
-router.post("/api/investments", investmentController.createInvestment);
+router.post("/api/investments", authMiddleware, investmentController.createInvestment);
 
 
 module.exports = router;

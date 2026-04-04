@@ -35,9 +35,9 @@ module.exports = {
     loginUser: async (req, res, next) => {
         try {
             const { email, password } = await loginSchema.validateAsync(req.body);
-            const user = await userService.loginUser(email, password);
+            const authData = await userService.loginUser(email, password);
 
-            res.apiSuccess({ user }, 200);
+            res.apiSuccess(authData, 200);
         } catch (error) {
             next(error);
         }

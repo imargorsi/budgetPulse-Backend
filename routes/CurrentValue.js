@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const currentValueController = require("../controller/currentValueController");
+const authMiddleware = require('../middleware/auth');
 
  /**
  * @swagger
@@ -8,6 +9,8 @@ const currentValueController = require("../controller/currentValueController");
  *   post:
  *     summary: Post Current Value to compute portfolio Summary
  *     tags: [CurrentValues]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -18,7 +21,7 @@ const currentValueController = require("../controller/currentValueController");
  *       201:
  *         description: Current value Posted successfully and portfolio summary computed successfully
  */
-router.post("/api/current-value", currentValueController.postCurrentValue);
+router.post("/api/current-value", authMiddleware, currentValueController.postCurrentValue);
 
 
 

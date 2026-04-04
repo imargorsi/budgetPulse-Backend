@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const fundsController = require("../controller/fundsController");
+const authMiddleware = require('../middleware/auth');
 
 
 
@@ -10,11 +11,13 @@ const fundsController = require("../controller/fundsController");
  *   get:
  *     summary: Get all funds
  *     tags: [Funds]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of funds
  */
-router.get("/api/funds", fundsController.getAllFunds);
+router.get("/api/funds", authMiddleware, fundsController.getAllFunds);
 
 
 /**
@@ -23,6 +26,8 @@ router.get("/api/funds", fundsController.getAllFunds);
  *   post:
  *     summary: Create a new und
  *     tags: [Funds]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -33,7 +38,7 @@ router.get("/api/funds", fundsController.getAllFunds);
  *       201:
  *         description: Fund created successfully
  */
-router.post("/api/funds", fundsController.createFund);
+router.post("/api/funds", authMiddleware, fundsController.createFund);
 
 
 

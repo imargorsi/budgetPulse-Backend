@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var createError = require("http-errors");
 var express = require("express");
 var cookieParser = require("cookie-parser");
@@ -17,6 +19,8 @@ var userRouter = require("./routes/user");
 
 var app = express();
 
+
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,6 +33,8 @@ app.use("/", investmentsRouter);
 app.use("/", currentValueRouter);
 app.use("/", fundsRouter);
 app.use("/", userRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
