@@ -20,9 +20,9 @@ module.exports = {
                     current_value,
                     date,
                     fundId
-                });
+                }, req.user.id);
         
-                const summary = await currentValueService.getPortfolioSummary(fundId, current_value);
+                const summary = await currentValueService.getPortfolioSummary(fundId, current_value, req.user.id);
         
                 res.apiSuccess({ currentValue, summary }, 201);
         

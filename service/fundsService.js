@@ -1,7 +1,10 @@
 const {db} = require("../models");
 
-const getAllFunds = async () => {
-    return db.Funds.findAll({ order: [["id", "ASC"]] });
+const getAllFunds = async (userId) => {
+    return db.Funds.findAll({
+        where: { userId },
+        order: [["id", "ASC"]],
+    });
 }
 
 

@@ -20,6 +20,16 @@ const User = defineUser(sequelize, DataTypes);
 
 const Funds = defineFunds(sequelize, DataTypes);
 
+User.hasMany(Funds, {
+	foreignKey: "userId",
+	as: "funds",
+});
+
+Funds.belongsTo(User, {
+	foreignKey: "userId",
+	as: "user",
+});
+
 Funds.hasMany(Investments, {
 	foreignKey: "fundId",
 	as: "investments",

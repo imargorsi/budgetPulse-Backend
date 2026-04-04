@@ -12,7 +12,7 @@ const schema = joi.object({
 module.exports = {
     getAllFunds: async (req, res, next) => {
     try {
-        const funds = await fundsService.getAllFunds();
+        const funds = await fundsService.getAllFunds(req.user.id);
         res.apiSuccess({ funds });
     }catch (error) {
         next(error);
@@ -22,7 +22,10 @@ module.exports = {
         try {
             const validator = await schema.validateAsync(req.body);
               
-              const fund = await fundsService.createFund(validator);
+                            const fund = await fundsService.createFund({
+                                ...validator,
+                                userId: req.user.id,
+                            });
               res.apiSuccess({ fund }, 201);
           } catch (error) {
               next(error);

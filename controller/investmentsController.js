@@ -16,7 +16,7 @@ module.exports = {
     getAllInvestments: async (req, res, next) => {
           try {
                 const { fundId } = await getInvestmentsSchema.validateAsync(req.query);
-                const investments = await investmentService.getAllInvestments(fundId);
+                const investments = await investmentService.getAllInvestments(fundId, req.user.id);
                 res.apiSuccess({ investments });
             } catch (error) {
                 next(error);
@@ -33,7 +33,7 @@ module.exports = {
                     amount,
                     date,
                     fundId
-                });
+                }, req.user.id);
         
         
         
