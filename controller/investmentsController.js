@@ -19,7 +19,7 @@ const deleteSchema = joi.object({
 module.exports = {
     getAllInvestments: async (req, res, next) => {
           try {
-                const { fundId } = await getInvestmentsSchema.validateAsync(req.query);
+                const { fundId } = await getInvestmentsSchema.validateAsync(req.params);
                 const investments = await investmentService.getAllInvestments(fundId, req.user.id);
                 res.apiSuccess({ investments });
             } catch (error) {

@@ -1,6 +1,6 @@
 module.exports = {
   type: 'object',
-  required: ['fundId', 'current_value', 'date'],
+  required: ['fundId', 'current_value'],
   properties: {
     fundId: {
       type: 'integer',
@@ -9,11 +9,6 @@ module.exports = {
     current_value: {
       type: 'number',
       example: 15000.5,
-    },
-    date: {
-      type: 'string',
-      format: 'date',
-      example: '2024-01-01',
     },
   },
 };

@@ -6,7 +6,6 @@ const joi = require("joi");
 
 const schema = joi.object({
     current_value: joi.number().required(),
-    date: joi.date().required(),
     fundId: joi.number().required()
 })
 
@@ -14,11 +13,10 @@ const schema = joi.object({
 module.exports = {
     postCurrentValue: async (req, res, next) => {
          try {
-                const { current_value, fundId, date } = await schema.validateAsync(req.body);
+                const { current_value, fundId } = await schema.validateAsync(req.body);
 
                 const currentValue = await currentValueService.createCurrentValue({
                     current_value,
-                    date,
                     fundId
                 }, req.user.id);
         

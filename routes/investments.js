@@ -10,14 +10,14 @@ const authMiddleware = require('../middleware/auth');
 
 /**
  * @swagger
- * /api/investments:
+ * /api/investments/{fundId}:
  *   get:
  *     summary: Get Investments by Fund
  *     tags: [Investments]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: fundId
  *         required: true
  *         schema:
@@ -28,7 +28,7 @@ const authMiddleware = require('../middleware/auth');
  *         description: List of investments
  */
 
-router.get("/api/investments",  authMiddleware, investmentController.getAllInvestments);
+router.get("/api/investments/:fundId",  authMiddleware, investmentController.getAllInvestments);
 
 
 

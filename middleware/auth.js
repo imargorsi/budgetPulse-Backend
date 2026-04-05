@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const AppError = require('../helper/AppError');
+const { db } = require('../models');
 
-module.exports = function (req, res, next) {
+module.exports = async function (req, res, next) {
   const authHeader = req.headers.authorization;
 
   // Expect: Bearer TOKEN
@@ -13,6 +14,11 @@ module.exports = function (req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await db.User.findByPk(decoded.id);
+    if (!user) {
+      return next(new AppError('User no longer exists. Please login again.', 401));
+    }
 
     req.user = decoded; // attach user info
     next();

@@ -24,7 +24,7 @@ router.get("/api/funds", authMiddleware, fundsController.getAllFunds);
  * @swagger
  * /api/funds:
  *   post:
- *     summary: Create a new und
+ *     summary: Create a new Fund
  *     tags: [Funds]
  *     security:
  *       - bearerAuth: []
