@@ -6,6 +6,8 @@ const currentValueSchema = require('./swaggerSchema/currentValue');
 const userSchema = require('./swaggerSchema/user');
 const loginSchema = require('./swaggerSchema/login');
 
+const deployedServerUrl = process.env.BACKEND_URL || 'https://budgetpulse-backend.onrender.com';
+
 const options = {
   definition: {
     openapi: '3.0.0',
@@ -15,6 +17,9 @@ const options = {
       description: 'API documentation',
     },
     servers: [
+      {
+        url: deployedServerUrl,
+      },
       {
         url: 'http://localhost:3000',
       },
